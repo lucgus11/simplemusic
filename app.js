@@ -198,3 +198,56 @@ stopBtn.addEventListener('click', () => {
         stopBtn.disabled = true;
     }
 });
+// --- 7. FFmpeg API (Conversion MP3) ---
+const { createFFmpeg, fetchFile } = FFmpeg;
+// On initialise le moteur
+const ffmpeg = createFFmpeg({ log: true });
+
+const convertMp3Btn = document.getElementById('convert-mp3-btn');
+const ffmpegStatus = document.getElementById('ffmpeg-status');
+
+convertMp3Btn.addEventListener('click', async () => {
+    if (!audioBlob) {
+        ffmpegStatus.textContent = "Aucun audio à convertir.";
+        return;
+    }
+
+    try {
+        convertMp3Btn.disabled = true;
+        ffmpegStatus.textContent = "Chargement du moteur audio (patientez)...";
+
+        // 1. Charger FFmpeg si ce n'est pas déjà fait
+        if (!ffmpeg.isLoaded()) {
+            await ffmpeg.load();
+        }
+
+        ffmpegStatus.textContent = "Conversion en MP3 en cours...";
+
+        // 2. Écrire le fichier brut dans la mémoire virtuelle de FFmpeg
+        ffmpeg.FS('writeFile', 'input.webm', await fetchFile(audioBlob));
+
+        // 3. Lancer la commande de conversion (comme dans un terminal)
+        await ffmpeg.run('-i', 'input.webm', 'output.mp3');
+
+        // 4. Récupérer le fichier MP3 terminé
+        const data = ffmpeg.FS('readFile', 'output.mp3');
+        const mp3Blob = new Blob([data.buffer], { type: 'audio/mp3' });
+        const mp3Url = URL.createObjectURL(mp3Blob);
+
+        // 5. Créer un lien de téléchargement automatique pour le MP3
+        const a = document.createElement('a');
+        a.href = mp3Url;
+        a.download = `SimpleMusic_${new Date().getTime()}.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        ffmpegStatus.textContent = "✅ Conversion MP3 terminée !";
+        convertMp3Btn.disabled = false;
+
+    } catch (error) {
+        console.error("Erreur FFmpeg :", error);
+        ffmpegStatus.textContent = "❌ Erreur lors de la conversion.";
+        convertMp3Btn.disabled = false;
+    }
+});
