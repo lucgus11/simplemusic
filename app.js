@@ -131,3 +131,70 @@ shareBtn.addEventListener('click', async () => {
         alert("Le partage natif n'est pas supporté sur cet appareil.");
     }
 });
+// --- 6. MediaRecorder API (Enregistreur Audio) ---
+let mediaRecorder;
+let audioChunks = [];
+
+const recordBtn = document.getElementById('record-btn');
+const stopBtn = document.getElementById('stop-btn');
+const audioPlayback = document.getElementById('audio-playback');
+const downloadLink = document.getElementById('download-link');
+const playbackContainer = document.getElementById('audio-playback-container');
+
+// Demander l'accès au microphone
+async function setupAudio() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = () => {
+            // Créer le fichier audio à partir des morceaux enregistrés
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            
+            // Mettre à jour le lecteur audio et le lien de téléchargement
+            audioPlayback.src = audioUrl;
+            downloadLink.href = audioUrl;
+            
+            // Note: On met .webm par défaut, Safari gère souvent le .mp4
+            downloadLink.download = `Idee_SimpleMusic_${new Date().getTime()}.webm`; 
+            
+            playbackContainer.style.display = "block";
+            audioChunks = []; // Réinitialiser pour le prochain enregistrement
+        };
+    } catch (err) {
+        console.error("Accès au microphone refusé ou introuvable.", err);
+        recordBtn.textContent = "Microphone bloqué";
+        recordBtn.disabled = true;
+    }
+}
+
+// Initialiser le micro dès que la page charge
+setupAudio();
+
+recordBtn.addEventListener('click', () => {
+    if (mediaRecorder && mediaRecorder.state === "inactive") {
+        mediaRecorder.start();
+        recordBtn.classList.add('recording');
+        recordBtn.textContent = "Enregistrement...";
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        playbackContainer.style.display = "none";
+    }
+});
+
+stopBtn.addEventListener('click', () => {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        recordBtn.classList.remove('recording');
+        recordBtn.textContent = "🔴 Enregistrer";
+        recordBtn.disabled = false;
+        stopBtn.disabled = true;
+    }
+});
