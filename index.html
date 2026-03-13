@@ -40,6 +40,22 @@
             <div id="midi-status">En attente d'un appareil MIDI...</div>
             <div id="midi-log" style="font-size: 2rem; text-align: center; margin-top: 10px;">--</div>
         </section>
+
+        <section class="card">
+            <h2>🎙️ Dictaphone / Idées</h2>
+            <div class="recorder-controls">
+                <button id="record-btn" class="record-idle">🔴 Enregistrer</button>
+                <button id="stop-btn" disabled>⏹️ Stopper</button>
+            </div>
+            
+            <div id="audio-playback-container" style="display: none; margin-top: 15px;">
+                <h3>Dernier enregistrement :</h3>
+                <audio id="audio-playback" controls style="width: 100%;"></audio>
+                <a id="download-link" download="SimpleMusic_Record.webm">
+                    <button>💾 Télécharger l'enregistrement</button>
+                </a>
+            </div>
+        </section>
     </main>
 
     <script src="/app.js"></script>
