@@ -1,0 +1,15 @@
+{
+    "name": "SimpleMusic",
+    "short_name": "SimpleMusic",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#121212",
+    "theme_color": "#1db954",
+    "icons": [
+      {
+        "src": "https://www.w3.org/TR/appmanifest/images/icon-512.png", 
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+}
