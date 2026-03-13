@@ -7,6 +7,7 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/style.css">
     <meta name="theme-color" content="#1db954">
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
 </head>
 <body>
     <header>
@@ -51,9 +52,14 @@
             <div id="audio-playback-container" style="display: none; margin-top: 15px;">
                 <h3>Dernier enregistrement :</h3>
                 <audio id="audio-playback" controls style="width: 100%;"></audio>
-                <a id="download-link" download="SimpleMusic_Record.webm">
-                    <button>💾 Télécharger l'enregistrement</button>
-                </a>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <a id="download-link" download="SimpleMusic_Record.webm">
+                        <button style="background: #333;">💾 Brut (.webm)</button>
+                    </a>
+                    <button id="convert-mp3-btn" style="background: #e91e63;">⚙️ Convertir en MP3</button>
+                </div>
+                <div id="ffmpeg-status" style="margin-top: 10px; font-size: 0.9em; color: #aaa;"></div>
             </div>
         </section>
     </main>
