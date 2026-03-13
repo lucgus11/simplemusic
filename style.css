@@ -63,3 +63,23 @@ li {
     padding: 10px;
     border-radius: 5px;
 }
+.measure-controls {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+select {
+    padding: 5px;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #1db954;
+    border-radius: 5px;
+}
+.icon-btn {
+    background: transparent;
+    border: 1px solid white;
+    width: auto;
+    padding: 5px 15px;
+    margin: 0;
+}
