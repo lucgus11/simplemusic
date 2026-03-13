@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musician Hub PWA</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/style.css">
+    <meta name="theme-color" content="#1db954">
+</head>
+<body>
+    <header>
+        <h1>🎵 Musician Hub</h1>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Métronome</h2>
+            <div class="metronome-controls">
+                <span id="bpm-display">120 BPM</span>
+                <input type="range" id="bpm-slider" min="40" max="220" value="120">
+                <button id="play-btn">Play / Stop</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Base de données (MusicBrainz)</h2>
+            <input type="text" id="search-input" placeholder="Rechercher un artiste...">
+            <button id="search-btn">Chercher</button>
+            <ul id="results-list"></ul>
+        </section>
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+</html>
