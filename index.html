@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musician Hub PWA</title>
+    <title>SimpleMusic</title>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/style.css">
     <meta name="theme-color" content="#1db954">
 </head>
 <body>
     <header>
-        <h1>🎵 Musician Hub</h1>
+        <h1>🎵 SimpleMusic</h1>
+        <button id="share-btn" class="icon-btn">Partager l'app</button>
     </header>
 
     <main>
@@ -19,15 +20,25 @@
             <div class="metronome-controls">
                 <span id="bpm-display">120 BPM</span>
                 <input type="range" id="bpm-slider" min="40" max="220" value="120">
-                <button id="play-btn">Play / Stop</button>
+                
+                <div class="measure-controls">
+                    <label for="measure-select">Mesure :</label>
+                    <select id="measure-select">
+                        <option value="4">4/4</option>
+                        <option value="3">3/4</option>
+                        <option value="2">2/4</option>
+                        <option value="5">5/4</option>
+                    </select>
+                </div>
+
+                <button id="play-btn">Play</button>
             </div>
         </section>
 
         <section class="card">
-            <h2>Base de données (MusicBrainz)</h2>
-            <input type="text" id="search-input" placeholder="Rechercher un artiste...">
-            <button id="search-btn">Chercher</button>
-            <ul id="results-list"></ul>
+            <h2>Clavier MIDI</h2>
+            <div id="midi-status">En attente d'un appareil MIDI...</div>
+            <div id="midi-log" style="font-size: 2rem; text-align: center; margin-top: 10px;">--</div>
         </section>
     </main>
 
